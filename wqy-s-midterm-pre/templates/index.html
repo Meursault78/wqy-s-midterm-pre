@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Database</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movie Database</h1>
+    <form action="/添加" method="POST">
+        <label for="movie_id">电影id:</label>
+        <input type="text" id="movie_id" name="movie_id" required>
+        <br>
+        <label for="movie_name">电影标题:</label>
+        <input type="text" id="movie_name" name="movie_name" required>
+        <br>
+        <label for="box">电影票房:</label>
+        <input type="number" id="box" name="box">
+        <br>
+        <label for="release_date">上映时间:</label>
+        <input type="date" id="release_date" name="release_date">
+        <br>
+        <label for="country">上映地区:</label>
+        <input type="text" id="country" name="country">
+        <br>
+        <label for="type">类型:</label>
+        <input type="text" id="type" name="type">
+        <br>
+        <label for="year">上映年份:</label>
+        <input type="text" id="year" name="year" min="1000" max="2000">
+        <br>
+        <button type="submit">添加</button>
+    </form>
+
+    <h2>Movie List</h2>
+    <ul>
+        {% for movie in movies %}
+            <li>{{ movie.title }} ({{ movie.year }})</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
