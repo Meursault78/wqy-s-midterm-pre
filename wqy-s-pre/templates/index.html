@@ -116,11 +116,11 @@
         <input type="text" id="search_query" name="search_query" required>
         <input class="btn" type="submit" name="submit" value="查询">
     </form>
+        <h3>查询结果</h3>
         {% if search_results_with_rank %}
-    <h3>查询结果</h3>
         <ul class="movie-list">
         {% for result in search_results_with_rank %}
-            <li class="movie-item">
+            <li class="movie-item search-result-item">
                 <div class="rank-container">
                 <span class="movie-rank">票房排名: {{ result.rank }}</span>
                 {{ result.movie_name }} ({{ result.year }})
@@ -143,6 +143,20 @@
             detailsElements.forEach(function(details) {
                 details.style.display = 'none';
             });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+        // 通过事件代理监听点击事件
+        document.addEventListener("click", function(event) {
+            var target = event.target;
+            if (target.classList.contains('search-result-item')) {
+                // 切换点击元素下的详细信息的显示状态
+                var details = target.querySelector('.movie-details');
+                if (details) {
+                    details.style.display = details.style.display === 'none' ? 'block' : 'none';
+                }
+            }
+        });
         });
 
 

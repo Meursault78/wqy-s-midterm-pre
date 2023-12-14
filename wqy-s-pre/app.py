@@ -66,17 +66,20 @@ def search_movie():
     )).all()
 
     all_movies = Movie.query.all()
-    search_results_with_rank = add_ranking(all_movies,search_results)
-    return render_template('index.html', movies=all_movies,search_results_with_rank=search_results_with_rank)
+    search_results_with_rank = add_ranking(all_movies, search_results)
+    return render_template('index.html', movies=all_movies, search_results_with_rank=search_results_with_rank)
 
-#定义排行函数
+
+# 定义排行函数
 def add_ranking(all_movies, search_results):
     sorted_movies = sorted(all_movies, key=lambda x: x.box, reverse=True)
 
     for i, movie in enumerate(sorted_movies, start=1):
         movie.rank = i
 
-    return sorted_movies
+    matched_results = [movie for movie in sorted_movies if movie.movie_id in [result.movie_id for result in search_results]]
+
+    return matched_results
 
 if __name__ == '__main__':
     app.run(debug=True)
