@@ -4,199 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        h1, h2 {
-            color: #008080;
-            margin-bottom: 10px;
-        }
-        form {
-            width: 100%;
-            max-width: 600px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            box-sizing: border-box;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-size: 15px;
-            font-weight: bold;
-        }
-        input {
-            width: calc(100% - 16px);
-            padding: 8px 10px;
-            margin-bottom: 12px;
-            border: 1px solid #008080; /* 边框颜色 */
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px; /* 字体大小 */
-            color: #333; /* 文字颜色 */
-        }
-
-        button {
-        background-color: #fff;
-        color: #008080;
-        padding: 7px 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        }
-
-        button:hover {
-        background-color: #fff;
-        }
-        .movie-rank {
-        font-size: 16px;
-        }
-        .movie-list {
-            list-style-type: none;
-            padding: 0;
-            width: 100%;
-            max-width: 600px;
-            text-align: left;
-            margin: 0 auto;
-        }
-        .movie-item {
-            margin-bottom: 8px;
-            color: #006666;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .movie-details {
+        .movie-container {
+            border: 2px solid #ccc;
             padding: 10px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .详细信息 {
-            background-color: #008080;
-            color: #fff;
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .详细信息:hover {
-            background-color: #006666;
-        }
-        .movie-details table {
-        width: 100%;
-        }
-
-        .movie-details table td {
-        padding: 8px;
-        border-bottom: 1px solid #ccc;
-        }
-
-        .movie-details table tr:last-child td {
-        border-bottom: none;
-        }
-
-        .rank-container {
-            display: flex;
-            align-items: center;
-            padding: 8px;
-            background-color: #339933;
-            color: #fff;
-            border-radius: 4px;
-            margin-bottom: 0px;
-            border: none;
-        }
-
-        .rank-label {
-            margin-right: 5px;
-            font-weight: bold;
-        }
-
-        .movie-rank {
-            font-size: 16px;
-        }
-
-        .label-box {
-            display: inline-block;
-            padding: 4px 10px;
-            background-color: #ddd;
-            border-radius: 5px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
-        .label-type {
-            background-color: #339933;
-            color: #fff;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>RUC 电影数据库</h1>
-    <form action="{{ url_for('add_movie') }}" method="POST">
-        <span class="label-box label-type">电影id:</span>
-        <input type="number" id="movie_id" name="movie_id" required>
-        <span class="label-box label-type">电影标题:</span>
-        <input type="text" id="movie_name" name="movie_name" required>
-        <span class="label-box label-type">电影票房:</span>
-        <input type="number" id="box" name="box">
-        <span class="label-box label-type">上映时间:</span>
-        <input type="date" id="release_date" name="release_date">
-        <span class="label-box label-type">上映地区:</span>
-        <input type="text" id="country" name="country">
-        <span class="label-box label-type">类型:</span>
-        <input type="text" id="type" name="type">
-        <span class="label-box label-type">上映年份:</span>
-        <input type="text" id="year" name="year" min="1000" max="2000">
-        <span class="label-box label-type">演员名称:</span>
-        <input type="text" id="actor_name" name="actor_name">
-        <button type="submit">添加</button>
-    </form>
+    <header>
+    <h1>
+        <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='imdb.png') }}">
+        RUC 电影数据库
+    </h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">电影信息</a></li>
+            <li><a href="javascript:void(0);" onclick="toggleAddMovie()">添加电影</a></li>
+            <li><a href="javascript:void(0);" onclick="toggleSearchMovie()">查询电影</a></li>
+            <li><a>票房分析</a></li>
+            <li><a>票房预测</a></li>
+        </ul>
+    </nav>
+    </header>
 
-    <form action="{{ url_for('search_movie') }}" method="GET">
-    <span class="label-box label-type">查询电影:</span>
-    <input type="text" id="search_query" name="search_query" required>
-    <button type="submit">查询</button>
-    </form>
-
-
-{% if search_results_with_rank %}
-    <h2>查询结果</h2>
-    <ul class="movie-list">
-        {% for result in search_results_with_rank %}
-            <li class="movie-item">
-                <div class="详细信息">
-                <span class="movie-rank">票房排名: {{ result.rank }}</span>
-                {{ result.movie_name }} ({{ result.year }})
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <h2>查询结果</h2>
-    <div class="详细信息">
-    <span class="movie-rank">暂无</span>
-    </div>
-{% endif %}
-
-
-
-    <h2>电影信息</h2>
-    <ul class="movie-list">
+    <section class="movie-list">
+    <ul class="avatar">
         {% for movie in movies %}
-            <li class="movie-item">
-                <div class="详细信息" onclick="toggleDetails(this)">详细信息</div>
-                {{ movie.movie_name }} ({{ movie.year }})
+            <li class="movie-container">  {{ movie.movie_name }} - {{ movie.year }}
+                <span class="float-right">
+                    <a class="imdb" href="https://www.imdb.com/find?q={{ movie.movie_name }}" target="_blank" title="Find this movie on IMDb">IMDb</a>
+                </span>
+                <div class="avatar" onclick="toggleDetails(this)">详细信息</div>
                 <div class="movie-details">
                     <table>
                         <tr>
@@ -228,12 +69,103 @@
             </li>
         {% endfor %}
     </ul>
+    </section>
+
+    <section id="add-movie-section" class="add-movie" style="display: none;" >
+    <h3> 添加电影</h3>
+    <form action="{{ url_for('add_movie') }}" method="POST">
+        <div class="movie-field">
+            <label for="movie_id">电影id:</label>
+            <input type="number" id="movie_id" name="movie_id" required>
+        </div>
+        <div class="movie-field">
+            <label for="movie_name">电影标题:</label>
+            <input type="text" id="movie_name" name="movie_name" required>
+        </div>
+        <div class="movie-field">
+            <label for="box">电影票房:</label>
+            <input type="number" id="box" name="box">
+        </div>
+        <div class="movie-field">
+            <label for="release_date">上映时间:</label>
+            <input type="date" id="release_date" name="release_date">
+        </div>
+        <div class="movie-field">
+            <label for="country">上映地区:</label>
+            <input type="text" id="country" name="country">
+        </div>
+        <div class="movie-field">
+            <label for="type">类型:</label>
+            <input type="text" id="type" name="type">
+        </div>
+        <div class="movie-field">
+            <label for="year">上映年份:</label>
+            <input type="text" id="year" name="year" min="1000" max="2000">
+        </div>
+        <div class="movie-field">
+            <label for="actor_name">演员名称:</label>
+            <input type="text" id="actor_name" name="actor_name">
+        </div>
+        <input class="btn" type="submit" name="submit" value="添加">
+    </form>
+    </section>
+
+    <section id="search-movie-section" class="search-movie" style="display: none;">
+    <form action="{{ url_for('search_movie') }}" method="GET" >
+        <h3>查询电影:</h3>
+        <input type="text" id="search_query" name="search_query" required>
+        <input class="btn" type="submit" name="submit" value="查询">
+    </form>
+        {% if search_results_with_rank %}
+    <h3>查询结果</h3>
+        <ul class="movie-list">
+        {% for result in search_results_with_rank %}
+            <li class="movie-item">
+                <div class="rank-container">
+                <span class="movie-rank">票房排名: {{ result.rank }}</span>
+                {{ result.movie_name }} ({{ result.year }})
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+        {% else %}
+        <div class="rank-container">
+            <span class="movie-rank">暂无结果</span>
+        </div>
+        {% endif %}
+    </section>
+
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var detailsElements = document.querySelectorAll('.movie-details');
+
+            detailsElements.forEach(function(details) {
+                details.style.display = 'none';
+            });
+        });
+
+
         function toggleDetails(button) {
             var details = button.nextElementSibling;
             details.style.display = details.style.display === 'none' ? 'block' : 'none';
         }
+
+        function toggleAddMovie() {
+            var addMovieSection = document.getElementById('add-movie-section');
+            addMovieSection.style.display = (addMovieSection.style.display === 'none') ? 'block' : 'none';
+        }
+
+        function toggleSearchMovie() {
+            var searchMovieSection = document.getElementById('search-movie-section');
+            searchMovieSection.style.display = (searchMovieSection.style.display === 'none') ? 'block' : 'none';
+        }
+
     </script>
+
+    <footer>
+        <small>&copy; 2023 wqy</small>
+    </footer>
+
 </body>
 </html>

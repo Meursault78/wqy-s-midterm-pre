@@ -45,12 +45,12 @@ def add_movie():
     actor_name = request.form['actor_name']
 
     new_movie = Movie(movie_id=movie_id, movie_name=movie_name, box=box, release_date=release_date,
-                      country=country, type=type, year=year,actor_name=actor_name)
+        country=country, type=type, year=year,actor_name=actor_name)
 
     # 在应用程序上下文中将电影保存到数据库
     with app.app_context():
-        db.session.add(new_movie)
-        db.session.commit()
+            db.session.add(new_movie)
+            db.session.commit()
 
     # 重定向到首页
     return redirect(url_for('index'))
@@ -65,13 +65,13 @@ def search_movie():
         Movie.actor_name.ilike(f"%{search_query}%"),
     )).all()
 
-    search_results_with_rank = add_ranking(search_results)
-    return render_template('index.html', movies=Movie.query.all(),search_results_with_rank=search_results_with_rank)
-
+    all_movies = Movie.query.all()
+    search_results_with_rank = add_ranking(all_movies,search_results)
+    return render_template('index.html', movies=all_movies,search_results_with_rank=search_results_with_rank)
 
 #定义排行函数
-def add_ranking(movies):
-    sorted_movies = sorted(movies, key=lambda x: x.box, reverse=True)
+def add_ranking(all_movies, search_results):
+    sorted_movies = sorted(all_movies, key=lambda x: x.box, reverse=True)
 
     for i, movie in enumerate(sorted_movies, start=1):
         movie.rank = i

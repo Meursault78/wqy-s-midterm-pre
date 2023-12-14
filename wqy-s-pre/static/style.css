@@ -1,0 +1,161 @@
+body {
+    margin: auto;
+    max-width: 580px;
+    font-size: 14px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+h1, h2 {
+    color: #008080;
+    margin-bottom: 10px;
+}
+form {
+    width: 100%;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #fff;
+    color: #008080;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #fff;
+}
+.movie-rank {
+    font-size: 16px;
+}
+.movie-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+    margin: 0 auto;
+}
+.movie-item {
+    margin-bottom: 8px;
+    color: #006666;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.movie-details {
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.movie-details table td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.movie-details table tr:last-child td {
+    border-bottom: none;
+}
+
+.rank-container {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #339933;
+    color: #fff;
+    border-radius: 4px;
+    margin-bottom: 0px;
+    border: none;
+}
+
+.rank-label {
+   margin-right: 5px;
+   font-weight: bold;
+}
+
+.movie-field {
+    margin-bottom: 10px;
+}
+
+.movie-field label {
+    display: block;
+    font-weight: bold;
+}
+
+.movie-field select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 4px;
+}
+.movie-field input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 4px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+nav li {
+    float: left;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 12px;
+    text-decoration: none;
+}
+
+nav li a:hover {
+    background-color: #111;
+}
+.float-right {
+    float: right;
+}
+
+.imdb {
+    font-size: 12px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    background: #F5C518;
+    border-radius: 5px;
+    padding: 3px 5px;
+}
+
+
+.btn {
+    font-size: 12px;
+    padding: 3px 5px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 1px solid #555555;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+}
